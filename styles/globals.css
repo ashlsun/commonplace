@@ -4,4 +4,6 @@
 
 body {
     font-family: "Inter", sans-serif;
+    background-color: rgb(238, 231, 222);
+    mix-blend-mode: color-burn;
 }
