@@ -156,7 +156,7 @@ export default function Index() {
                     </button>
 
                     <button 
-                        onClick={()=>{posts.reverse(); setSortRecentFirst(!sortRecentFirst)}}
+                        onClick={()=>{entries.reverse(); setSortRecentFirst(!sortRecentFirst)}}
                         className="flex items-center mr-2 select-none cursor-pointer rounded-lg text-sm outline bg-purple-300 outline-1 px-2 transition hover:text-black hover:outline-black hover:bg-purple-500 active:scale-90 " >
                             { sortRecentFirst ?
                                 <> 
