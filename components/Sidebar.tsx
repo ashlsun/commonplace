@@ -39,7 +39,7 @@ export default function Sidebar(props: {
 
                         <div className="italic mt-2 text-xs text-gray-800"> {dayjs().format("M/D/YY")} in <b>silk road</b></div>
                         
-                        <div className="outline outline-1 cursor-pointer text-gray-800 outline-gray-700 rounded-sm mt-1 p-2 text-xs hover:shadow-lg hover:outline-black hover:text-black transition">
+                        <div className="border border-1 cursor-pointer text-gray-800 border-gray-700 rounded-sm mt-1 p-2 text-xs hover:shadow-lg hover:border-black hover:text-black transition">
                             ...burned my thub and it really hurt owieweee mahek helped buti wish that i could not do that...
                         </div>
                     </div>
@@ -74,7 +74,7 @@ export default function Sidebar(props: {
 
         <button 
         onClick={()=>props.setOpen(!props.isOpen)}
-        className={"z-50 fixed top-10 left-[289px] hover:bg-black  outline-black hover:text-white active:scale-75 bg-white outline outline-1 px-2 rounded-full transition-all duration-500 " + (props.isOpen ? "" : "-translate-x-[280px] transition-transform duration-500")}>
+        className={"z-50 fixed top-10 left-[289px] hover:bg-black  border-black hover:text-white active:scale-75 bg-white border border-1 px-2 rounded-full transition-all duration-500 " + (props.isOpen ? "" : "-translate-x-[280px] transition-transform duration-500")}>
             {props.isOpen ? "<" : ">"}
         </button>
 

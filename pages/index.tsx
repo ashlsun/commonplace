@@ -82,7 +82,10 @@ export default function Index() {
     function onRequest() {
         axios.get("/api/entry").then(res => {
             setEntries(res.data.entries);
+            setSortRecentFirst(true);
         }).catch(e => console.log(e));
+
+        
 
         axios.get("/api/journal").then(res => {
             setJournals(res.data.journals);
@@ -131,7 +134,7 @@ export default function Index() {
                 </div>
                     <button 
                         onClick={toggleWhoseEntries}
-                        className="flex items-center mr-2 select-none cursor-pointer rounded-lg text-sm outline bg-pink-300 outline-1 px-2 transition duration-200 hover:text-black hover:outline-black hover:bg-pink-500 active:scale-90 " >
+                        className="flex items-center mr-2 select-none cursor-pointer rounded-lg text-sm border bg-pink-300 border-1 px-2 transition duration-200 hover:text-black border-black hover:bg-pink-500 active:scale-90 " >
                             { (whoseEntries === 0) ? 
                                 <>
                                     <TbHome/> 
@@ -157,7 +160,7 @@ export default function Index() {
 
                     <button 
                         onClick={()=>{entries.reverse(); setSortRecentFirst(!sortRecentFirst)}}
-                        className="flex items-center mr-2 select-none cursor-pointer rounded-lg text-sm outline bg-purple-300 outline-1 px-2 transition hover:text-black hover:outline-black hover:bg-purple-500 active:scale-90 " >
+                        className="flex items-center mr-2 select-none cursor-pointer rounded-lg text-sm border border-black bg-purple-300 border-1 px-2 transition hover:bg-purple-500 active:scale-90 " >
                             { sortRecentFirst ?
                                 <> 
                                     <TbSortDescending/> <div className="ml-1">Sort: Newest</div>
@@ -174,7 +177,7 @@ export default function Index() {
                     {/* why wont these buttons change on hover? OHHH ITS BC OF EMOJI MART */}
 
                     <button 
-                        className="flex items-center select-none cursor-pointer rounded-lg text-sm outline bg-indigo-400 outline-1 px-2 transition hover:text-black hover:outline-black hover:bg-indigo-600 active:scale-90 "> 
+                        className="flex items-center select-none cursor-pointer rounded-lg text-sm border border-black bg-indigo-400 border-1 px-2 transition  hover:bg-indigo-600 active:scale-90 "> 
                             <TbFilter/> 
                             <div className="ml-1">Filter</div>
                     </button>
@@ -190,7 +193,7 @@ export default function Index() {
                     aria-expanded="false"
                     aria-haspopup="true"
                     onClick={toggleJournalMenu}
-                    className={"items-center flex select-none active:scale-95 max-h-5 max-w-lg w-auto bg-yellow-300 text-sm rounded-lg outline outline-black outline-1 px-2 transition-all duration-100 hover:bg-yellow-700 hover:outline-bg" + (openJournalMenu ? " bg-yellow-500" : "")}>
+                    className={"items-center flex select-none active:scale-95 max-h-5 max-w-lg w-auto bg-yellow-300 text-sm rounded-lg border border-black border-1 px-2 transition-all duration-100 hover:bg-yellow-700 " + (openJournalMenu ? " bg-yellow-500" : "")}>
                             <TbBook2/>
                          &nbsp;{journal ? 
                         
@@ -206,7 +209,7 @@ export default function Index() {
                     <div className="relative bg-slate-900">
 
                         <div className={ "z-30 absolute left-3 " +
-                            (openJournalMenu ? "h-100 opacity-100 absolute outline outline-1 backdrop-blur-xxl bg-white shadow-md pt-2 " : "h-0 origin-top-left scale-50 opacity-0 " ) +
+                            (openJournalMenu ? "h-100 opacity-100 absolute border border-black border-1 backdrop-blur-xxl bg-white shadow-md pt-2 " : "h-0 origin-top-left scale-50 opacity-0 " ) +
                             "transition-all duration-100 ease-out text-sm rounded-sm"
                             // hover:shadow-md hover:shadow-yellow-600
                         }
@@ -217,7 +220,7 @@ export default function Index() {
                             <div className="min-w-[200px]">
                                 <input
                                     autoFocus
-                                    className="opacity-inherit outline-bottom-black px-2 py-1 w-full bg-transparent focus:outline-none placeholder:text-gray-800"
+                                    className="opacity-inherit border-bottom-black px-2 py-1 w-full bg-transparent focus:outline-none placeholder:text-gray-800"
                                     type="text"
                                     value={searchJournals}
                                     onChange={(e) => setSearchJournals(e.target.value)}
@@ -273,13 +276,13 @@ export default function Index() {
                 <br/>
 
                 <button 
-                    className="disabled:bg-transparent disabled:text-gray-700 disabled:outline-gray-700 disabled:cursor-not-allowed enabled:active:scale-95 select-none rounded-lg text-sm  bg-green-300 outline outline-black outline-1 px-2 mt-1 transition duration-200 hover:bg-green-800 "
+                    className="disabled:bg-transparent disabled:text-gray-700 disabled:border-gray-700 disabled:cursor-not-allowed enabled:active:scale-95 select-none rounded-lg text-sm  bg-green-300 border border-black border-1 px-2 mt-1 transition duration-200 hover:bg-green-800 "
                     disabled={isPostEmpty || !journal}
                     onClick={newEntry}>+ Publish
                 </button>
 
                 <button
-                    className="ml-2 font-bold select-none rounded-lg text-sm  bg-cyan-300 outline outline-black outline-1 px-1 mt-1 active:scale-90 transition hover:bg-cyan-700 "
+                    className="ml-2 font-bold select-none rounded-lg text-sm  bg-cyan-300 border border-black border-1 px-1 mt-1 active:scale-90 transition hover:bg-cyan-700 "
                     onClick={()=>setOpenEmojiPicker(!openEmojiPicker)}
                 >
                     😀 
@@ -324,17 +327,17 @@ export default function Index() {
                                     <div className="absolute right-10">
 
                                     <button 
-                                        className="z-0 text-gray-700 p-1 items-center select-none mx-1 last:origin-top-right text-xs outline rounded-md outline-gray-700 outline-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:outline-black hover:text-white">
+                                        className="z-0 text-gray-700 p-1 items-center select-none mx-1 last:origin-top-right text-xs border rounded-md border-gray-700 border-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:border-black hover:text-white">
                                         <TbCopy/>
                                     </button>
 
                                     <button 
-                                        className="z-0 text-gray-700 p-1 items-center select-none mx-1 last:origin-top-right text-xs outline rounded-md outline-gray-700 outline-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:outline-black hover:text-white">
+                                        className="z-0 text-gray-700 p-1 items-center select-none mx-1 last:origin-top-right text-xs border rounded-md border-gray-700 border-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:border-black hover:text-white">
                                         <TbEdit/>
                                     </button>
                                     <button 
                                         onClick={() => onDelete(d._id)}
-                                        className="z-0 text-gray-700 p-1 items-center select-none ml-1 last:origin-top-right text-xs outline rounded-md outline-gray-700 outline-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:outline-black hover:text-white">
+                                        className="z-0 text-gray-700 p-1 items-center select-none ml-1 last:origin-top-right text-xs border rounded-md border-gray-700 border-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:border-black hover:text-white">
                                         <TbTrash/>
                                     </button>
                                     </div>
