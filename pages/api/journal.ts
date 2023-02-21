@@ -1,27 +1,34 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import mongoose from "mongoose";
-import { PostModel } from "../../models/post";
+import { JournalModel } from "../../models/journal";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         if (req.method === "POST") {
-            if (!req.body.body) return res.status(400).send("Missing post body");
-            
+            console.log("yeup")
+            if (!req.body.journal) return res.status(400).send("Missing journal name");
+
+            console.log(req.body.journal)
+
             await mongoose.connect(process.env.MONGODB_URL as string);
-            await PostModel.create({body: req.body.body});
+            await JournalModel.create({journal: req.body.journal})
+            ;
             
             return res.status(200).send("Success");
 
         } else if (req.method === "GET") {
             await mongoose.connect(process.env.MONGODB_URL as string);
-            const posts = await PostModel.find();
+            
+            const journals = await JournalModel.find();
 
-            return res.status(200).json({posts: posts})
+            return res.status(200).json({journals: journals})
+            
+
         } else if (req.method === "DELETE"){
-            if (!req.body.id) return res.status(400).send("Missing post ID");
+            if (!req.body.id) return res.status(400).send("Missing journal name");
             
             await mongoose.connect(process.env.MONGODB_URL as string);
-            await PostModel.deleteOne({_id: req.body.id});
+            await JournalModel.deleteOne({_id: req.body.id});
 
             return res.status(200).send("Success")
         

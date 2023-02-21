@@ -1,9 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;600;700&family=Volkhov:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Emoji:wght@500&display=swap');
+@font-face {
+  font-family: "EmojiMart";
+  src: url("https://fonts.gstatic.com/s/notoemoji/v24/bMrnmSyK7YY-MEu6aWjPDs-ar6uWaGWuob-Z0jwvS-FGJCMY.ttf")
+    format("truetype");
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-family: "Inter", sans-serif;
-    background-color: rgb(238, 231, 222);
-    mix-blend-mode: color-burn;
+::-moz-selection { /* Code for Firefox */
+    color: white;
+    background: black;
+  }
+  
+  ::selection {
+    color: white;
+    background: black;
+  }
+
+  html {
+    background: rgb(238, 231, 222); 
+    min-height: 100%;
 }
+
+
+body {
+    font-family: "Inconsolata", "Noto Emoji", sans-serif;
+    mix-blend-mode: color-burn;
+    /* background-color: rgb(238, 231, 222);  */
+    /* line-height: 1.3; */
+}
+
+em-emoji-picker input {
+  height: 10px;
+}
+
+em-emoji-picker {
+  color: black !important;
+  margin-top: 6px;
+  position: absolute;
+  --background-rgb: 255, 255, 255;
+  --category-icon-size: 16px;
+  /* --color-border-over: rgb(0, 0, 0); */
+  /* --color-border: rgb(0,0,0); */
+  --color-border-radius: 0;
+  --font-family: 'Inconsolata';
+  --font-size: 16px;
+  --rgb-accent: 50,50,50;
+  --rgb-input: 200, 200, 200;
+  --em-rgb-color: var(--rgb-color, 0, 0, 0) !important;
+  --color-b: rgba(var(--em-rgb-color), 1);
+  --color-c: rgba(var(--em-rgb-color), 1);
+
+  outline: solid rgb(56, 56, 56) 1px;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  height: 10vh;
+  width:250px;
+  min-height: 200px;
+  max-height: 500px;
+}
+
+    /* -webkit-animation: background 1200s cubic-bezier(1,0,0,1) infinite;
+    animation: background 1200s cubic-bezier(1,0,0,1) infinite;  
+}
+
+
+@-webkit-keyframes background {
+  0% { background-color: rgb(238, 231, 222); }
+  33% { background-color: rgb(222, 238, 223); }  
+  67% { background-color: rgb(236, 222, 238); }
+  100% { background-color: rgb(238, 224, 222); }
+}
+
+@keyframes background {
+    0% { background-color: rgb(238, 231, 222); }
+    33% { background-color: rgb(222, 238, 223); }  
+    67% { background-color: rgb(236, 222, 238); }
+    100% { background-color: rgb(238, 224, 222); }
+} */
