@@ -9,7 +9,7 @@ export default function Marquee () {
     return (
         <>
         <a href="/">
-        <div className="flex select-none items-end">
+        <div className="flex mix-blend-color-burn select-none items-end">
             
                 <img src="/toppansun.png" 
                     className="cursor-pointer h-[30px] w-auto hover:rotate-12 transition duration-200"

@@ -116,7 +116,7 @@ export default function JournalPage(props: {journalName:string}) {
                                     
                                 </div> 
 
-                                <p className="whitespace-pre-wrap post-body text-gray-900 mix-blend-normal">
+                                <p className="whitespace-pre-wrap post-body text-gray-900 mix-blend-color-burn">
                                     {d.body} 
                                 </p>
                         </div>

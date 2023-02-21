@@ -21,7 +21,7 @@
     background: black;
   }
 
-  html {
+html {
     background: rgb(238, 231, 222); 
     min-height: 100%;
 }
@@ -29,7 +29,7 @@
 
 body {
     font-family: "Inconsolata", "Noto Emoji", sans-serif;
-    mix-blend-mode: color-burn;
+    mix-blend-mode: color-burn !important;
     /* background-color: rgb(238, 231, 222);  */
     /* line-height: 1.3; */
 }
