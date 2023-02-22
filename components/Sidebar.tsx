@@ -12,7 +12,7 @@ export default function Sidebar(props: {
     
     return (
         <>
-        <div className={"fixed z-50 py-10 min-w-[300px] max-w-[300px] " + (props.isOpen ? "" : "-translate-x-[280px]") + " h-screen outline outline-1 transition-transform duration-500"}>
+        <div className={"fixed bg-white z-50 py-10 min-w-[300px] max-w-[300px] " + (props.isOpen ? "" : "-translate-x-[280px]") + " h-screen outline outline-1 transition-transform duration-500"}>
 
             {/* menu here */}
             <nav className="flex px-10">
