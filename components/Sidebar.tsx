@@ -74,7 +74,7 @@ export default function Sidebar(props: {
 
         <button 
         onClick={()=>props.setOpen(!props.isOpen)}
-        className={"z-50 fixed top-10 left-[289px] hover:bg-black  border-black hover:text-white active:scale-75 border border-1 px-2 rounded-full transition-all duration-500 " + (props.isOpen ? "" : "-translate-x-[280px] transition-transform duration-500")}>
+        className={"z-50 fixed top-10 left-[289px] bg-white hover:bg-black  border-black hover:text-white active:scale-75 border border-1 px-2 rounded-full transition-all duration-500 " + (props.isOpen ? "" : "-translate-x-[280px] transition-transform duration-500")}>
             {props.isOpen ? "<" : ">"}
         </button>
 
