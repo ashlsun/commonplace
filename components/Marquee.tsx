@@ -18,7 +18,7 @@ export default function Marquee () {
             
             
             <span className={"font-bold transition duration-200 px-2 " + (showTitle ? "" : " opacity-0")}>
-            <div className="relative flex overflow-x-hidden max-w-[640px]">
+            <div className="relative hidden md:flex overflow-x-hidden max-w-[640px]">
                 <div className="animate-marquee whitespace-nowrap">
                 <span className="mx-16 px-2 rounded-full outline outline-1 outline-[#99411ba7]">
                         <span className="text-[#99281b92]">Common</span><span className="text-[#99411ba7]">place</span><span className="text-[#99581bdd]">.day!</span>

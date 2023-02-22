@@ -343,7 +343,7 @@ export default function Index() {
                                     </div>
                                     
                                 </div> 
-                                <p className="whitespace-pre-wrap post-body text-gray-900">
+                                <p className="whitespace-pre-wrap break-words post-body text-gray-900">
                                     {d.body} 
                                 </p>
                                 
