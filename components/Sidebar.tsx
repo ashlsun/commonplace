@@ -33,7 +33,7 @@ export default function Sidebar(props: {
                     <div> <br/> <button className=" p-2 m-3">&lt;</button> </div>
 
                     <div>
-                        <div className="absolute my-2 right-11 text-gray-700 bg-white z-20 rounded-full px-1 hover:text-black transition cursor-pointer">
+                        <div className="absolute my-2 right-11 text-gray-700  z-20 rounded-full px-1 hover:text-black transition cursor-pointer">
                             <TbCircleX/>
                         </div>
 
@@ -74,7 +74,7 @@ export default function Sidebar(props: {
 
         <button 
         onClick={()=>props.setOpen(!props.isOpen)}
-        className={"z-50 fixed top-10 left-[289px] hover:bg-black  border-black hover:text-white active:scale-75 bg-white border border-1 px-2 rounded-full transition-all duration-500 " + (props.isOpen ? "" : "-translate-x-[280px] transition-transform duration-500")}>
+        className={"z-50 fixed top-10 left-[289px] hover:bg-black  border-black hover:text-white active:scale-75 border border-1 px-2 rounded-full transition-all duration-500 " + (props.isOpen ? "" : "-translate-x-[280px] transition-transform duration-500")}>
             {props.isOpen ? "<" : ">"}
         </button>
 
