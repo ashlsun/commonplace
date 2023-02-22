@@ -163,11 +163,11 @@ export default function Index() {
                         className="flex items-center mr-2 select-none cursor-pointer rounded-lg text-sm border border-black bg-purple-300 border-1 px-2 transition hover:bg-purple-500 active:scale-90 " >
                             { sortRecentFirst ?
                                 <> 
-                                    <TbSortDescending/> <div className="ml-1">Sort: Newest</div>
+                                    <TbSortDescending/> <div className="ml-1"><span className="hidden md:inline">Sort: </span>Newest</div>
                                 </>
                                 :
                                 <>
-                                    <TbSortAscending/> <div className="ml-1">Sort: Oldest</div>
+                                    <TbSortAscending/> <div className="ml-1"><span className="hidden md:inline">Sort: </span>Oldest</div>
                                 </>
                             }
                             
