@@ -35,12 +35,11 @@ export default function Entry(
     return (
         <>
         <div
-            className={"my-2 py-0 rounded-[1px] outline-offset-8 outline-1 transition-all outline-gray-600" + (openMenu ? " outline" : (highlightEntry ? " outline" : ""))}
+            className={"my-2 py-0 rounded-[1px] ring-offset-8 transition-all ring-gray-600" + (openMenu ? " ring-1" : (highlightEntry ? " ring-1" : ""))}
             key={props._id}>
                 <div className="flex relative">
-                    <a className="font-bold text-green-900 hover:text-black transition cursor-pointer">ashley</a> 
                     <span>
-                        <div className="text-gray-700"> , {dayjs(props.createdAt).format("h:mma")}  in  <a className=" text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:</div>
+                        <div className="text-gray-700"> {dayjs(props.createdAt).format("h:mma")}  in  <a className=" text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:</div>
                         
                     </span>
                     <div 
@@ -80,7 +79,7 @@ export default function Entry(
                 {editing ? 
                 <>
                     <textarea
-                        className="bg-transparent focus:outline-dashed outline-gray-700 outline-offset-1 rounded-sm resize-none text-gray-900 placeholder:text-gray-800 w-full"
+                        className="bg-transparent focus:ring-gray-700 focus:ring-1 ring-offset-1 outline-none rounded-sm resize-none text-gray-900 placeholder:text-gray-800 w-full"
                         autoFocus
                         onFocus={handleChange}
                         onChange={handleChange}
@@ -101,7 +100,7 @@ export default function Entry(
 
                 :
                 <p className="whitespace-pre-wrap break-words post-body text-gray-900">
-                    {entry} 
+                    <a className="font-bold text-green-900 hover:text-black transition cursor-pointer">ashley</a>: {entry} 
                 </p>}
                                     
         </div>
