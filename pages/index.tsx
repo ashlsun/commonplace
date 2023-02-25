@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import Sidebar from '../components/Sidebar'
+import Entry from "../components/Entry"
 import Input from "../components/Input";
 
 export default function Index() {
@@ -122,44 +123,12 @@ export default function Index() {
                 
                 <br/><br/>{entries.map( d => (
                     <>
-                        <div
-                            className="py-0"
-                            key={d._id}>
-                                <div className="flex">
-                                    <span>
-                                        <div className="text-gray-600"> {dayjs(d.createdAt).format("h:mma") + " on " + dayjs(d.createdAt).format("MMM D, YYYY") } </div>
-                                        <div className="text-gray-800">
-                                            <a className="font-bold text-green-900 hover:underline">ashley</a> posted 
-                                            in <a className="font-bold text-yellow-900 hover:underline" href={"/journals/"+d.journal}>{d.journal}</a>
-                                        </div>
-                                         
-                                    </span>
-                                
-                                    <div className="absolute right-10">
-
-                                    <button 
-                                        className="z-0 text-gray-700 p-1 items-center select-none mx-1 last:origin-top-right text-xs border rounded-md border-gray-700 border-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:border-black hover:text-white">
-                                        <TbCopy/>
-                                    </button>
-
-                                    <button 
-                                        className="z-0 text-gray-700 p-1 items-center select-none mx-1 last:origin-top-right text-xs border rounded-md border-gray-700 border-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:border-black hover:text-white">
-                                        <TbEdit/>
-                                    </button>
-                                    <button 
-                                        onClick={() => onDelete(d._id)}
-                                        className="z-0 text-gray-700 p-1 items-center select-none ml-1 last:origin-top-right text-xs border rounded-md border-gray-700 border-1 px-1 mt-1 transition-all duration-200 hover:bg-black hover:border-black hover:text-white">
-                                        <TbTrash/>
-                                    </button>
-                                    </div>
-                                    
-                                </div> 
-                                <p className="whitespace-pre-wrap break-words post-body text-gray-900">
-                                    {d.body} 
-                                </p>
-                                
-                                
-                        </div>
+                        <Entry
+                            _id={d._id}
+                            journal={d.journal}
+                            createdAt={d.createdAt}
+                            body={d.body}
+                        />
                         <br/>
                         
                     </>

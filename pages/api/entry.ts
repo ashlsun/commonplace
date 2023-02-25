@@ -20,8 +20,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (req.query.journal) {
                 const entries = await EntryModel.find({journal: req.query.journal}).sort({ createdAt: 'desc' });
                 return res.status(200).json({entries: entries})
-
             } 
+
             const entries = await EntryModel.find().sort({ createdAt: 'desc' });
             return res.status(200).json({entries: entries})
 
@@ -33,6 +33,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             return res.status(200).send("Success")
         
+        } else if (req.method === "PUT"){  // UPDATE
+
+            if (!req.body.id) return res.status(400).send("Missing post ID");
+            if (!req.body.body) return res.status(400).send("Missing post body");
+
+            await mongoose.connect(process.env.MONGODB_URL as string);
+
+            const filter = { _id: req.body.id };
+            const update = { body: req.body.body};
+
+            let doc = await EntryModel.findOneAndUpdate(filter, update);
+            console.log(doc)
+
+            return res.status(200).send("Success")
+
         } else {
             return res.status(405).send("Method not allowed");
         }
