@@ -2,7 +2,7 @@ import axios from "axios";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { SetStateAction, useState } from "react";
-import { TbBook2 } from "react-icons/tb";
+import { TbBook2, TbCalendarEvent } from "react-icons/tb";
 
 export default function Input( props : {
     journals : {journal: string, _id: string}[];
@@ -124,13 +124,13 @@ return (
                         <hr></hr>
 
                         {filteredJournals.map (d => (
-                            <>
+            
                                 <div key={d._id}
                                     onClick={() => {if (openJournalMenu) {toggleJournalMenu(); setTimeout(()=> setJournal(d.journal), 120); }}}
                                     className={ (openJournalMenu ? "cursor-pointer " : "pointer-events-none ") + "px-2 py-1 hover:bg-black hover:text-white transition duration-200 delay-75"}>
                                 {d.journal}
                                 </div>
-                            </>
+                            
 
                         )
                             
@@ -169,19 +169,27 @@ return (
 
             <br/>
 
-            <button 
-                className="disabled:bg-transparent disabled:text-gray-700 disabled:border-gray-700 disabled:cursor-not-allowed enabled:active:scale-95 select-none rounded-lg text-sm  bg-green-300 border border-black border-1 px-2 mt-1 transition duration-200 hover:bg-green-800 "
-                disabled={isPostEmpty || !journal}
-                onClick={newEntry}>+ Publish
-            </button>
+            
+            <div className="items-center">
 
-            <button
-                className="ml-2 font-bold select-none rounded-lg text-sm  bg-cyan-300 border border-black border-1 px-1 mt-1 active:scale-90 transition hover:bg-cyan-700 "
-                onClick={()=>setOpenEmojiPicker(!openEmojiPicker)}
-            >
-                😀 
-            </button>
-            <div className={"emoji-picker z-20" +
+                <button 
+                    className="disabled:bg-transparent disabled:text-gray-700 disabled:border-gray-700 disabled:cursor-not-allowed enabled:active:scale-95 select-none rounded-lg text-sm  bg-green-300 border border-black border-1 px-2 mt-1 transition duration-200 hover:bg-green-800 "
+                    disabled={isPostEmpty || !journal}
+                    onClick={newEntry}>+ Publish
+                </button>
+
+                <button
+                    className="ml-2 font-bold select-none rounded-lg text-sm  bg-cyan-300 border border-black border-1 px-1 mt-1 active:scale-90 transition hover:bg-cyan-700 "
+                    onClick={()=>setOpenEmojiPicker(!openEmojiPicker)}
+                >
+                    😀 
+                </button>
+                
+            </div>
+            
+
+
+            <div className={"emoji-picker relative z-20" +
             (openEmojiPicker ? "" : " origin-bottom-left scale-90 opacity-0 pointer-events-none z-0 " ) +
             " transition-all ease-out"}
             >
