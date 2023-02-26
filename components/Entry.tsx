@@ -8,7 +8,8 @@ export default function Entry(
         _id: string,
         createdAt: string,
         journal: string,
-        body: string
+        body: string,
+        onRequest: () => any
     }
 ) {
     const [highlightEntry, setHighlightEntry] = useState(false);
@@ -32,16 +33,27 @@ export default function Entry(
         }).catch(e => console.log(e));
     }
 
+    function onDelete(){
+        if (confirm("Are you sure you want to delete this entry? This action is irreversible.")){
+            axios.delete("/api/entry", {data: {id: props._id}}).then(() => {
+                props.onRequest();
+                console.log("deleted");
+            }).catch(e => console.log(e))
+        }
+        
+    }
+
     return (
         <>
         <div
-            className={"my-2 py-0 rounded-[1px] ring-offset-8 transition-all ring-gray-600" + (openMenu ? " ring-1" : (highlightEntry ? " ring-1" : ""))}
+            className={"my-2 py-0 z-0 rounded-[1px] ring-offset-8 transition-all ring-gray-600" + (openMenu ? " ring-1" : (highlightEntry ? " ring-1" : ""))}
             key={props._id}>
-                <div className="flex relative">
-                    <span>
+                <div className="flex relative z-0">
+                    <span className="flow">
                         <div className="text-gray-700"> {dayjs(props.createdAt).format("h:mma")}  in  <a className=" text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:</div>
                         
                     </span>
+
                     <div 
                         className={"absolute right-0 top-1  cursor-pointer hover:text-gray-800 transition-all" + (openMenu ? " text-gray-800" : " text-gray-600" )}
                         onClick={() => setOpenMenu(!openMenu)}
@@ -52,7 +64,10 @@ export default function Entry(
                     <div
                         className={(openMenu ? "opacity-100 top-5 ": "origin-top-right opacity-0 scale-95 top-4 pointer-events-none " ) + "transition-all absolute right-0  border border-gray-800 border-1 bg-white rounded-sm text-sm z-10 shadow-lg"}
                     >
-                        <div className="flex items-center pt-2 px-2 py-1 hover:bg-black hover:text-white transition duration-300 select-none cursor-pointer">
+                        <div className="flex items-center p-1 px-2 select-none text-xs border-b-1 border-b bg-gray-400 border-gray-600">
+                            Entry options:
+                        </div>
+                        <div className="flex items-center px-2 py-1 hover:bg-black hover:text-white transition duration-300 select-none cursor-pointer">
                             <TbCopy/> <span className="px-2">Copy link</span>
                         </div>
                         <div className="flex items-center px-2 py-1 hover:bg-black hover:text-white transition duration-300 select-none cursor-pointer">
@@ -70,7 +85,8 @@ export default function Entry(
                         >
                             <TbEdit/> <span className="px-2">Edit </span>
                         </div>
-                        <div className="flex items-center pb-2 px-2 py-1 hover:bg-black hover:text-red-700 transition duration-300 select-none cursor-pointer">
+                        <div className="flex items-center pb-2 px-2 py-1 hover:bg-black hover:text-red-700 transition duration-300 select-none cursor-pointer"
+                            onClick={onDelete}>
                             <TbTrash/> <span className="px-2">Delete </span>
                         </div>
                     </div>
@@ -85,14 +101,14 @@ export default function Entry(
                         onChange={handleChange}
                         value={draft}
                     />
-                    <div className="flex ">
+                    <div className="flex items-end ">
                         <button 
                             className="flex items-center select-none cursor-pointer rounded-lg text-sm border border-black bg-lime-300 border-1 px-2 transition  hover:bg-lime-600 active:scale-90 mr-2 ml-auto"
-                            onClick={() => {onUpdate(); setEditing(false)}}>
+                            onClick={() => {onUpdate(); setEntry(draft); setEditing(false)}}>
                             <TbArrowUpCircle/> <span className="px-1">Update</span></button>
                         <button 
                             className="flex items-center select-none cursor-pointer rounded-lg text-sm border border-black bg-slate-400 border-1 px-2 transition  hover:bg-slate-600 active:scale-90 "
-                            onClick={() => setEditing(false)}>
+                            onClick={() => {setDraft(entry); setEditing(false)}}>
                             <TbCircleOff/> <span className="px-1">Cancel</span></button>
                     </div>
                 </>

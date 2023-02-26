@@ -1,10 +1,7 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { TbBook2, TbEdit, TbTrash, TbCopy, TbWorld, TbHome, TbBuildingCommunity, TbSortDescending, TbSortAscending, TbFilter} from 'react-icons/tb';
+import { TbWorld, TbHome, TbBuildingCommunity, TbSortDescending, TbSortAscending, TbFilter} from 'react-icons/tb';
 import dayjs from 'dayjs';
-import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
-import Sidebar from '../components/Sidebar'
 import Entry from "../components/Entry"
 import Input from "../components/Input";
 
@@ -14,32 +11,60 @@ export default function Index() {
 
     const [whoseEntries, setWhoseEntries] = useState(0)
     const [sortRecentFirst, setSortRecentFirst] = useState(true)
+    const dateHeadings: any  = {} //TODO figure out how to annotate type
+    let dates: string[] = []
+
+    function createDateHeadings(){
+        // for entry in entries:
+        //     if date not in dateHeadings
+        //         dateHeadings[date] = entry 
+        //     else
+        //         dateHeadings[date].append(entry)
+        console.log("before loop")
+        for (let i in entries){
+            console.log(entries[i]._id);
+            let date = dayjs(entries[i].createdAt).format('YYYY_MM_DD');
+            if ( date in dateHeadings){
+                console.log("appending");
+                dateHeadings[date].push(entries[i]);
+            } else {
+                console.log("creating");
+                dateHeadings[date] = [entries[i]];
+            }
+        }
+        dates = Object.keys(dateHeadings);
+        dates.sort();
+        console.log(dates);
+        console.log("after loop");
+        console.log(dateHeadings);
+
+    }
+
 
     function toggleWhoseEntries(){
         setWhoseEntries((whoseEntries+1)% 3);
     };
 
-
     function onRequest() {
+        console.log("requesting")
         axios.get("/api/entry").then(res => {
             setEntries(res.data.entries);
             setSortRecentFirst(true);
         }).catch(e => console.log(e));
+        console.log("got entries")
 
         axios.get("/api/journal").then(res => {
             setJournals(res.data.journals);
         }).catch(e => console.log(e));
+        console.log("got journals")
 
-    }
-
-    function onDelete(id: string){
-        axios.delete("/api/entry", {data: {id: id}}).then(() => {
-            onRequest();
-        }).catch(e => console.log(e))
     }
 
     useEffect(()=> {
         onRequest();
+        console.log("requested!")
+
+        createDateHeadings();
     }, []);
 
 
@@ -121,17 +146,51 @@ export default function Index() {
                 />
             
                 
-                <br/><br/>{entries.map( d => (
-                    <>
+                <br/><br/>
+
+
+                {/* // why isn't it showing up */}
+                {/* Oh i think it may be because dates is not useState? perhaps react doesn't recognize that it's updated since it was first initialized as empty
+                 */}
+                {dates.map( date => (
+                    <div>
+                        hi {date}
+                    </div>
+                    // <div key={date}>
+                    //     {date}
+                    //     {/* <div>
+                    //         {dateHeadings[date].map(entry => (
+                    //             <div key={entry._id}>
+                    //             <Entry
+                                    
+                    //                 _id={entry._id}
+                    //                 journal={entry.journal}
+                    //                 createdAt={entry.createdAt}
+                    //                 body={entry.body}
+                    //             />
+                    //             <br/>
+                                
+                    //         </div>
+                    //         ))}
+                    //     </div> */}
+                    // </div>
+                    ))
+                }
+
+
+                {entries.map( d => (
+                    <div key={d._id}>
                         <Entry
+                            
                             _id={d._id}
                             journal={d.journal}
                             createdAt={d.createdAt}
                             body={d.body}
+                            onRequest={onRequest}
                         />
                         <br/>
                         
-                    </>
+                    </div>
                     
                 ))}
 
