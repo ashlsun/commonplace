@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import axios from "axios";
 import { SetStateAction, useState } from "react";
-import { TbDots , TbCopy, TbDownload, TbLockAccess, TbBooks, TbEdit, TbTrash, TbArrowUpCircle, TbCircleOff} from "react-icons/tb"
+import { TbDots , TbCopy, TbDownload, TbLockAccess, TbBooks, TbEdit, TbTrash, TbArrowUpCircle, TbCircleOff, TbLockOpen, TbLink, TbBookmark} from "react-icons/tb"
 
 export default function Entry(
     props: {
@@ -50,17 +50,29 @@ export default function Entry(
             key={props._id}>
                 <div className="flex relative z-0">
                     <span className="flow">
-                        <div className="text-gray-700"> {dayjs(props.createdAt).format("h:mma")}  in  <a className=" text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:</div>
+                        <div className="text-gray-700"> {dayjs(props.createdAt).format("MMMM D, h:mma")}  in  <a className=" text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:</div>
                         
                     </span>
 
                     <div 
-                        className={"absolute right-0 top-1  cursor-pointer hover:text-gray-800 transition-all" + (openMenu ? " text-gray-800" : " text-gray-600" )}
+                        className={"absolute right-0 top-1  cursor-pointer hover:text-gray-800 transition-all" + (openMenu ? " text-gray-800" : " text-gray-700" )}
                         onClick={() => setOpenMenu(!openMenu)}
                         onMouseEnter={() => setHighlightEntry(true)}
                         onMouseLeave={() => setHighlightEntry(false)}>
                             <TbDots/>
                     </div>
+                    <div
+                        className="absolute right-5 md:right-6 top-1 text-gray-700 hover:text-gray-800">
+                        <TbBookmark/>
+
+                    </div>
+                    <div
+                        className="absolute right-10 md:right-12 top-1 text-gray-700 hover:text-gray-800">
+                       <TbLockOpen/>
+                    </div>
+                    
+                    
+                    
                     <div
                         className={(openMenu ? "opacity-100 top-5 ": "origin-top-right opacity-0 scale-95 top-4 pointer-events-none " ) + "transition-all absolute right-0  border border-gray-800 border-1 bg-white rounded-sm text-sm z-10 shadow-lg"}
                     >
@@ -95,7 +107,7 @@ export default function Entry(
                 {editing ? 
                 <>
                     <textarea
-                        className="bg-transparent focus:ring-gray-700 focus:ring-1 ring-offset-1 outline-none rounded-sm resize-none text-gray-900 placeholder:text-gray-800 w-full"
+                        className="bg-transparent focus:ring-gray-600 focus:ring-1 ring-offset-1 outline-none rounded-sm resize-none text-gray-900 placeholder:text-gray-800 w-full"
                         autoFocus
                         onFocus={handleChange}
                         onChange={handleChange}
