@@ -1,7 +1,7 @@
 import axios from "axios";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { TbBook2, TbCalendarEvent } from "react-icons/tb";
 
 export default function Input( props : {
@@ -12,18 +12,20 @@ export default function Input( props : {
     const [postBody, setPostBody] = useState("");
 
     const [journal, setJournal] = useState("");
-    const [isPostEmpty, setIsPostEmpty] = useState(true);
+    const [isPostValid, setIsPostValid] = useState(false);
     const [openJournalMenu, setOpenJournalMenu] = useState(false)
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
 
     const [searchJournals, setSearchJournals] = useState("");
     const filteredJournals = props.journals.filter( d => d.journal.includes(searchJournals)).slice(0,6)
 
+    useEffect(()=> {
+        setIsPostValid(!!journal && !!postBody);
+    }, [journal, postBody]);
 
     const handleChange = (event: { target: { value: SetStateAction<string>; style: { height: string; }; scrollHeight: number; }; }) => {
         // 👇️ access textarea value
         setPostBody(event.target.value);
-        setIsPostEmpty(!postBody);
         event.target.style.height = "0px"
         event.target.style.height = Math.max(64, event.target.scrollHeight) + "px"
     };
@@ -73,7 +75,6 @@ export default function Input( props : {
 
     function appendEmoji(e: any){
         setPostBody(postBody + e.native);
-        setIsPostEmpty(false);
     }
 
 return (
@@ -173,8 +174,8 @@ return (
             <div className="items-center">
 
                 <button 
-                    className="disabled:bg-transparent disabled:text-gray-700 disabled:border-gray-700 disabled:cursor-not-allowed enabled:active:scale-95 select-none rounded-lg text-sm  bg-green-300 border border-black border-1 px-2 mt-1 transition duration-200 hover:bg-green-800 "
-                    disabled={isPostEmpty || !journal}
+                    className="disabled:bg-green-100 disabled:text-gray-700 disabled:border-gray-700 disabled:cursor-not-allowed enabled:active:scale-95 select-none rounded-lg text-sm  bg-green-300 border border-black border-1 px-2 mt-1 transition duration-200 hover:bg-green-800 "
+                    disabled={!isPostValid}
                     onClick={newEntry}>+ Publish
                 </button>
 
@@ -183,6 +184,11 @@ return (
                     onClick={()=>setOpenEmojiPicker(!openEmojiPicker)}
                 >
                     😀 
+                </button>
+                <button
+                    className="ml-2 select-none rounded-lg text-sm text-gray-900 bg-blue-400 border border-black border-1 px-1 mt-1 active:scale-90 transition hover:bg-blue-600 "
+                >
+                    📆
                 </button>
                 
             </div>
