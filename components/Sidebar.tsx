@@ -78,8 +78,11 @@ export default function Sidebar(props: {
 
             </div>
             </>
-        :
-        <div className="text-center mt-14 px-10">
+        : (
+            status === "loading" ? 
+            <div className="text-center mt-14 px-10 text-gray-500">loading...</div>
+            :
+            <div className="text-center mt-14 px-10">
             <div>welcome <span className="font-bold text-gray-900">visitor</span>! 🤗</div> 
             <div className="leading-snug text-xs ">
                 <br></br>
@@ -94,6 +97,8 @@ export default function Sidebar(props: {
                 sign in with google
             </button>
         </div>
+        )
+       
         } 
 
         </div>

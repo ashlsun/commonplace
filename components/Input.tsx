@@ -5,6 +5,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { TbBook2, TbCalendarEvent } from "react-icons/tb";
 
 export default function Input( props : {
+    loadingJournals: boolean,
     journals : {journal: string, _id: string}[];
     setJournals: (journals: {journal: string, _id: string}[]) => any;
     onRequest: () => any;
@@ -124,7 +125,10 @@ return (
                         </div>
                         <hr></hr>
 
-                        {filteredJournals.map (d => (
+                        {props.loadingJournals ? 
+                        <div className="px-2 py-2">Loading...</div>
+                        :
+                        filteredJournals.map (d => (
             
                                 <div key={d._id}
                                     onClick={() => {if (openJournalMenu) {toggleJournalMenu(); setTimeout(()=> setJournal(d.journal), 120); }}}

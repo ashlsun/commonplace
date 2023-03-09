@@ -8,63 +8,32 @@ import Input from "../components/Input";
 export default function Index() {
     const [entries, setEntries] = useState<{body: string, journal: string, _id: string,  createdAt: string}[]>([]);
     const [journals, setJournals] = useState<{journal: string, _id: string}[]>([]);
+    const [isLoadingEntries, setLoadingEntries] = useState(true);
+    const [isLoadingJournals, setLoadingJournals] = useState(true);
 
     const [whoseEntries, setWhoseEntries] = useState(0)
     const [sortRecentFirst, setSortRecentFirst] = useState(true)
-    const dateHeadings: any  = {} //TODO figure out how to annotate type
-    let dates: string[] = []
-
-    function createDateHeadings(){
-        // for entry in entries:
-        //     if date not in dateHeadings
-        //         dateHeadings[date] = entry 
-        //     else
-        //         dateHeadings[date].append(entry)
-        console.log("before loop")
-        for (let i in entries){
-            console.log(entries[i]._id);
-            let date = dayjs(entries[i].createdAt).format('YYYY_MM_DD');
-            if ( date in dateHeadings){
-                console.log("appending");
-                dateHeadings[date].push(entries[i]);
-            } else {
-                console.log("creating");
-                dateHeadings[date] = [entries[i]];
-            }
-        }
-        dates = Object.keys(dateHeadings);
-        dates.sort();
-        console.log(dates);
-        console.log("after loop");
-        console.log(dateHeadings);
-
-    }
-
 
     function toggleWhoseEntries(){
         setWhoseEntries((whoseEntries+1)% 3);
     };
 
     function onRequest() {
-        console.log("requesting")
-        axios.get("/api/entry").then(res => {
-            setEntries(res.data.entries);
-            setSortRecentFirst(true);
-        }).catch(e => console.log(e));
-        console.log("got entries")
-
         axios.get("/api/journal").then(res => {
             setJournals(res.data.journals);
+            setLoadingJournals(false);
         }).catch(e => console.log(e));
-        console.log("got journals")
 
+        axios.get("/api/entry").then(res => {
+            setEntries(res.data.entries);
+            setSortRecentFirst(true);  
+            setLoadingEntries(false);
+        }).catch(e => console.log(e));
     }
 
     useEffect(()=> {
         onRequest();
-        console.log("requested!")
-
-        createDateHeadings();
+        
     }, []);
 
 
@@ -73,10 +42,10 @@ export default function Index() {
             <div>
                 <>
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-700">
                     <span className="text-black font-bold" > Entries</span> |
                     <a href="/journals">
-                        <span className="cursor-pointer transition duration-300 hover:text-gray-700 hover:font-bold "> Journals</span> |
+                        <span className="cursor-pointer transition duration-300 hover:text-gray-900 hover:font-bold "> Journals</span> |
                     </a>
                     
                     <span> Grids</span> 
@@ -140,6 +109,7 @@ export default function Index() {
 
 
                 <Input
+                    loadingJournals={isLoadingJournals}
                     journals={journals}
                     setJournals={setJournals}
                     onRequest={onRequest}
@@ -149,50 +119,27 @@ export default function Index() {
                 <br/><br/>
 
 
-                {/* // why isn't it showing up */}
-                {/* Oh i think it may be because dates is not useState? perhaps react doesn't recognize that it's updated since it was first initialized as empty
-                 */}
-                {dates.map( date => (
-                    <div>
-                        hi {date}
-                    </div>
-                    // <div key={date}>
-                    //     {date}
-                    //     {/* <div>
-                    //         {dateHeadings[date].map(entry => (
-                    //             <div key={entry._id}>
-                    //             <Entry
-                                    
-                    //                 _id={entry._id}
-                    //                 journal={entry.journal}
-                    //                 createdAt={entry.createdAt}
-                    //                 body={entry.body}
-                    //             />
-                    //             <br/>
+                { isLoadingEntries ? 
+                    <div>Loading entries...</div>
+                    :
+                    entries.map( d => (
+                        <div key={d._id}>
+                            <Entry
                                 
-                    //         </div>
-                    //         ))}
-                    //     </div> */}
-                    // </div>
+                                _id={d._id}
+                                journal={d.journal}
+                                createdAt={d.createdAt}
+                                body={d.body}
+                                onRequest={onRequest}
+                            />
+                            <br/>
+                            
+                        </div>
+                        
                     ))
                 }
 
-
-                {entries.map( d => (
-                    <div key={d._id}>
-                        <Entry
-                            
-                            _id={d._id}
-                            journal={d.journal}
-                            createdAt={d.createdAt}
-                            body={d.body}
-                            onRequest={onRequest}
-                        />
-                        <br/>
-                        
-                    </div>
-                    
-                ))}
+            
 
                 
                 
