@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { TbWorld, TbHome, TbBuildingCommunity, TbSortDescending, TbSortAscending, TbFilter} from 'react-icons/tb';
-import dayjs from 'dayjs';
 import Entry from "../components/Entry"
 import Input from "../components/Input";
+import getServerSideProps from "../utils/serverProps";
 
 export default function Index() {
     const [entries, setEntries] = useState<{body: string, journal: string, _id: string,  createdAt: string}[]>([]);
@@ -149,3 +149,5 @@ export default function Index() {
         </>
     );
 }
+
+export { getServerSideProps };

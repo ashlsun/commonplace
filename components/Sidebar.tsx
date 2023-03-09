@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { TbCircleX} from 'react-icons/tb';
 import dayjs from 'dayjs';
-import { signIn, useSession} from "next-auth/react";
+import { signIn, signOut, useSession} from "next-auth/react";
 
 
 export default function Sidebar(props: {
@@ -17,8 +17,8 @@ export default function Sidebar(props: {
         {status === "authenticated" ? 
         <> 
             <div className="px-10 pt-10 pb-3 text-center">
-                
-                welcome <span className="text-green-900 font-bold cursor-pointer">{session.user?.name}</span>! 🤗
+
+                welcome <button className="text-green-900 font-bold" onClick={() => signOut()}>{session.user?.name}</button>! 🤗
                 <div className="px-10 text-xs text-gray-800 pb-3">
                  {dayjs().format("dddd, MMM.D.YYYY")}
                 </div>

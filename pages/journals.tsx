@@ -2,6 +2,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
 import { TbBook2, TbEdit, TbTrash, TbCopy} from 'react-icons/tb';
 import dayjs from 'dayjs';
+import getServerSideProps from "../utils/serverProps";
 
 
 export default function Journals() {
@@ -56,3 +57,5 @@ export default function Journals() {
         </>
     );
 }
+
+export { getServerSideProps };

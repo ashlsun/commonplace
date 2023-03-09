@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Input from "../../components/Input";
 import Entry from "../../components/Entry";
-
-export async function getServerSideProps(context: any) {
-    
-    const journalName = context.params.journalName;
-    return {props: {journalName: journalName}}
-}
+// import serverProps from "../../utils/serverProps";
 
 export default function JournalPage(props: {journalName:string}) {
     const [entries, setEntries] = useState<{body: string, journal: string, _id: string,  createdAt: string}[]>([]);
@@ -70,3 +65,11 @@ export default function JournalPage(props: {journalName:string}) {
         </>
     )
 }
+
+export async function getServerSideProps(context: any) {
+    // await serverProps(context);
+
+    const journalName = context.params.journalName;
+    return {props: {journalName: journalName}}
+}
+
