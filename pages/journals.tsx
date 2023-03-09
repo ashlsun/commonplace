@@ -4,24 +4,8 @@ import { TbBook2, TbEdit, TbTrash, TbCopy} from 'react-icons/tb';
 import dayjs from 'dayjs';
 
 
-export default function Index() {
+export default function Journals() {
     const [journals, setJournals] = useState<{journal: string, _id: string}[]>([]);
-
-    const [openSidebar, setOpenSidebar] = useState(true)
-    const [showTitle, setShowTitle] = useState(false)
-
-    const [searchJournals, setSearchJournals] = useState("");
-    const filteredJournals = journals.filter( d => d.journal.includes(searchJournals))
-    
-
-    function truncate(str: string) {
-        if (str.length > 23) {
-            return str.slice(0,21) + "..."
-        }
-        return str
-        
-    }
-
 
 
     function onRequest() {
@@ -32,7 +16,7 @@ export default function Index() {
     }
 
     function onDelete(id: string){
-        axios.delete("/api/journals", {data: {id: id}}).then(() => {
+        axios.delete("/api/journal", {data: {id: id}}).then(() => {
             onRequest();
         }).catch(e => console.log(e))
     }
