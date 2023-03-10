@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TbCircleX} from 'react-icons/tb';
 import dayjs from 'dayjs';
 import { signIn, signOut, useSession} from "next-auth/react";
+import axios from "axios";
 
 
 export default function Sidebar(props: {
@@ -9,7 +10,26 @@ export default function Sidebar(props: {
     setOpen: (openSidebar: boolean) => any
 }) {
 
+    
     const { data: session, status } = useSession()
+    const [name, setName] = useState("")
+
+    function onRequest() {
+        if (session?.user?.name && session.user.email) {
+            
+            axios.get("/api/user", {params: {email: session?.user.email}}).then(res => {
+                setName(res.data.user.name)
+            }).catch(e => console.log(e));
+            
+        }
+       
+       
+    }
+
+    useEffect(()=> {
+        onRequest();
+
+    }, []);
     
     return (
         <>
@@ -18,7 +38,7 @@ export default function Sidebar(props: {
         <> 
             <div className="px-10 pt-10 pb-3 text-center">
 
-                welcome <button className="text-green-900 font-bold" onClick={() => signOut()}>{session.user?.name}</button>! 🤗
+                welcome <button className="text-green-900 font-bold" onClick={() => signOut()}>{name}</button>! 🤗
                 <div className="px-10 text-xs text-gray-800 pb-3">
                  {dayjs().format("dddd, MMM.D.YYYY")}
                 </div>
