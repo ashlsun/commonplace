@@ -14,7 +14,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         } else if (req.method === "GET") {
 
-            console.log(req.query)
             await mongoose.connect(process.env.MONGODB_URL as string);
 
             if (req.query.journal) {
@@ -44,7 +43,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const update = { body: req.body.body};
 
             let doc = await EntryModel.findOneAndUpdate(filter, update);
-            console.log(doc)
 
             return res.status(200).send("Success")
 

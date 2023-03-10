@@ -5,12 +5,10 @@ import { JournalModel } from "../../models/journal";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         if (req.method === "POST") {
-            console.log("yeup")
             if (!req.body.journal) return res.status(400).send("Missing journal name");
 
-            console.log(req.body.journal)
-
             await mongoose.connect(process.env.MONGODB_URL as string);
+            
             await JournalModel.create({journal: req.body.journal})
             ;
             
