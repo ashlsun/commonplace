@@ -6,12 +6,24 @@ module.exports = {
   "./pages/**.{js,ts,jsx,tsx}",
   "./components/**.{js,ts,jsx,tsx}",
   ],
+  
   theme: {
     extend: {
+      typography: ({ theme }) => ({
+        ink: {
+          css: {
+            maxWidth: '100%',
+            '--tw-prose-counters': theme('colors.black'),
+            '--tw-prose-bullets': theme('colors.black'),
+            '--tw-prose-hr': theme('colors.black'),
+          }
+        }
+      }),
       colors: {
         emerald: colors.emerald,
         lime: colors.lime,
         teal: colors.teal,
+        
       },
       animation: {
         marquee: 'marquee 65s linear infinite',
@@ -29,6 +41,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 
 }

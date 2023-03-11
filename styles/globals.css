@@ -11,6 +11,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  ul, ol {
+    list-style: revert;
+  }
+}
+
 ::-moz-selection { /* Code for Firefox */
     color: white;
     background: black;
@@ -64,6 +70,88 @@ em-emoji-picker {
   width:250px;
   min-height: 200px;
   max-height: 250px;
+}
+
+.entry > * {
+  overflow-wrap: break-word;
+} 
+
+.entry {
+  display: inline-block;
+}
+
+.entry p {
+  margin-top: 0;
+}
+
+.entry li {
+  margin: 0;
+}
+
+.entry ul {
+  margin-top: 0;
+}
+
+.entry ol {
+  margin-top: 0;
+}
+
+.entry input {
+  margin: 0;
+}
+
+ul {
+  padding-left: 0px;
+}
+
+ul li{
+  text-indent: -21px;
+}
+
+ul li:before {
+  content: '- ';  
+  padding-right: 5px;
+}
+
+.entry hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+
+  
+}
+
+
+input[type="checkbox"] {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1em;
+  height: 1em;
+  border: 0.075em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(0.2em);
+
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+
+.form-control + .form-control {
+  margin-top: 1em;
 }
 
     /* -webkit-animation: background 1200s cubic-bezier(1,0,0,1) infinite;

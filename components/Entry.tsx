@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { SetStateAction, useState } from "react";
 import { TbDots , TbCopy, TbDownload, TbLockAccess, TbBooks, TbEdit, TbTrash, TbArrowUpCircle, TbCircleOff, TbLockOpen, TbLink, TbBookmark} from "react-icons/tb"
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function Entry(
     props: {
@@ -17,6 +19,7 @@ export default function Entry(
     const [editing, setEditing] = useState(false)
     const [draft, setDraft] = useState(props.body)
     const [entry, setEntry] = useState(props.body)
+    const [isEmojiEntry, setEmojiEntry] = useState(!/\P{Extended_Pictographic}/u.test(entry) && entry.length < 10);
 
     const handleChange = (event: { target: { value: SetStateAction<string>; style: { height: string; }; scrollHeight: number; }; }) => {
         setDraft(event.target.value);
@@ -30,6 +33,7 @@ export default function Entry(
             body: draft
         }).then(() => {
             setEntry(draft);
+            setEmojiEntry(!/\P{Emoji}/u.test(entry) && entry.length < 10)
         }).catch(e => console.log(e));
     }
 
@@ -50,8 +54,11 @@ export default function Entry(
             key={props._id}>
                 <div className="flex relative z-0">
                     <span className="flow">
-                        <div className="text-gray-700"> {dayjs(props.createdAt).format("MMMM D, h:mma")}  in  <a className=" text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:</div>
-                        
+                        <div className="text-gray-700"> {dayjs(props.createdAt).format("MMMM D, YYYY, h:mma")} </div>
+                        <div className="text-gray-700 mt-0">
+                            <span className="no-underline font-bold text-green-900 hover:text-black transition cursor-pointer">ashley</span> {editing ? <></> : isEmojiEntry ? <>entered <span className="text-black">{entry}</span></>: <></>} in <a className="no-underline text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:
+                            
+                        </div>
                     </span>
 
                     <div 
@@ -74,7 +81,7 @@ export default function Entry(
                     
                     
                     <div
-                        className={(openMenu ? "opacity-100 top-5 ": "origin-top-right opacity-0 scale-95 top-4 pointer-events-none " ) + "transition-all absolute right-0  border border-gray-800 border-1 bg-white rounded-sm text-sm z-10 shadow-lg"}
+                        className={(openMenu ? "z-10 opacity-100 top-5 ": "origin-top-right opacity-0 scale-95 top-4 pointer-events-none z-0 " ) + "transition-all absolute right-0 lg:right-[-165px] lg:top-[-9px] lg:origin-top-left border border-gray-800 border-1 bg-white rounded-sm text-sm shadow-lg"}
                     >
                         <div className="flex items-center p-1 px-2 select-none text-xs border-b-1 border-b bg-gray-400 border-gray-600">
                             Entry options:
@@ -126,10 +133,21 @@ export default function Entry(
                 </>
                 
 
-                :
-                <p className="whitespace-pre-wrap break-words post-body text-gray-900">
-                    <a className="font-bold text-green-900 hover:text-black transition cursor-pointer">ashley</a>: {entry} 
-                </p>}
+                : isEmojiEntry ? <> </> :
+                <div className="prose prose-ink text-gray-900
+                    prose-h1:text-xl prose-h2:text-lg prose-h3:text-base 
+                    prose-ul:list-none 
+                    prose-a:underline-offset-[2px] prose-a:decoration-[0.8px] hover:prose-a:text-gray-800 prose-a:transition 
+                    accent-black 
+                    leading-normal 
+                    entry 
+                    
+                    prose-p:break-words break-words
+                    ">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget="_blank">
+                        {entry}
+                    </ReactMarkdown>
+                </div>}
                                     
         </div>
 
