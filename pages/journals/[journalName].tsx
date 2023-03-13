@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Input from "../../components/Input";
 import Entry from "../../components/Entry";
-// import serverProps from "../../utils/serverProps";
+import serverProps from "../../utils/serverProps";
 
 export default function JournalPage(props: {journalName:string}) {
     const [entries, setEntries] = useState<{body: string, journal: string, _id: string,  createdAt: string}[]>([]);
@@ -67,9 +67,21 @@ export default function JournalPage(props: {journalName:string}) {
 }
 
 export async function getServerSideProps(context: any) {
-    // await serverProps(context);
-
     const journalName = context.params.journalName;
+
+    const sessionProps = await serverProps(context);
+    if (sessionProps.redirect) {
+
+        return {redirect: {permanent: false, destination: "/signup"}}
+
+    } else if (sessionProps.props && sessionProps.props.session) {
+
+        return {props: {journalName: journalName, name: sessionProps.props?.name, session: sessionProps.props?.session}}
+   
+    }
+        
     return {props: {journalName: journalName}}
+    
+    
 }
 
