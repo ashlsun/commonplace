@@ -19,7 +19,7 @@ export default function Entry(
     const [editing, setEditing] = useState(false)
     const [draft, setDraft] = useState(props.body)
     const [entry, setEntry] = useState(props.body)
-    const [isEmojiEntry, setEmojiEntry] = useState(!/\P{Extended_Pictographic}/u.test(entry) && entry.length < 10);
+    const [isEmojiEntry, setEmojiEntry] = useState(/\p{Extended_Pictographic}/u.test(entry) && entry.length <= 7);
 
     const handleChange = (event: { target: { value: SetStateAction<string>; style: { height: string; }; scrollHeight: number; }; }) => {
         setDraft(event.target.value);
@@ -46,7 +46,7 @@ export default function Entry(
     }
 
     useEffect(()=> {
-        setEmojiEntry(/\P{Extended_Pictographic}/u.test(entry) && entry.length < 10)
+        setEmojiEntry(/\p{Extended_Pictographic}/u.test(entry) && entry.length <= 7)
     }, [entry]);
 
     return (
@@ -58,8 +58,8 @@ export default function Entry(
                     <span className="flow">
                         <div className="text-gray-700"> {dayjs(props.createdAt).format("MMMM D, YYYY, h:mma")} </div>
                         <div className="text-gray-700 mt-0">
-                            <span className="no-underline font-bold text-green-900 hover:text-black transition cursor-pointer">ashley</span> {editing ? <></> : isEmojiEntry ? <>entered <span className="text-black">{entry}</span></>: <></>} in <a className="no-underline text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>:
-                            
+                            {editing ? <></> : isEmojiEntry ? <><span className="text-black text-3xl">{entry}</span></>: <><span className="align-top no-underline font-bold text-green-900 hover:text-black transition cursor-pointer">ashley</span></>}
+                           <span className="align-top"> in <a className="align-top no-underline text-yellow-900 hover:text-black transition-all" href={"/journals/"+props.journal}>{props.journal}</a>: </span>
                         </div>
                     </span>
 
