@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import axios from "axios";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { TbDots , TbCopy, TbDownload, TbLockAccess, TbBooks, TbEdit, TbTrash, TbArrowUpCircle, TbCircleOff, TbLockOpen, TbLink, TbBookmark} from "react-icons/tb"
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -33,7 +33,6 @@ export default function Entry(
             body: draft
         }).then(() => {
             setEntry(draft);
-            setEmojiEntry(!/\P{Emoji}/u.test(entry) && entry.length < 10)
         }).catch(e => console.log(e));
     }
 
@@ -44,8 +43,11 @@ export default function Entry(
                 console.log("deleted");
             }).catch(e => console.log(e))
         }
-        
     }
+
+    useEffect(()=> {
+        setEmojiEntry(/\P{Extended_Pictographic}/u.test(entry) && entry.length < 10)
+    }, [entry]);
 
     return (
         <>
