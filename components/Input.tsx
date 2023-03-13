@@ -18,7 +18,7 @@ export default function Input( props : {
     const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
 
     const [searchJournals, setSearchJournals] = useState("");
-    const filteredJournals = props.journals.filter( d => d.journal.includes(searchJournals)).slice(0,6)
+    const filteredJournals = props.journals.filter( d => d.journal.toLowerCase().includes(searchJournals.toLowerCase())).slice(0,6)
 
     useEffect(()=> {
         setIsPostValid(!!journal && !!postBody);
